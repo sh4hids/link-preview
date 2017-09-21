@@ -1,9 +1,9 @@
 {
   "name": "@nunkisoftware/link-preview",
   "version": "0.0.0-development",
-  "main": "main.js",
+  "main": "src/main.js",
+  "private": false,
   "repository": "https://github.com/nunkisoftware/link-preview.git",
-  "author": "MarquesDev <marques.developpement@gmail.com>",
   "license": "MIT",
   "keywords": [
     "link",
