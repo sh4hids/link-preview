@@ -1,0 +1,8 @@
+{
+  "name": "link-preview",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/nunkisoftware/link-preview.git",
+  "author": "MarquesDev <marques.developpement@gmail.com>",
+  "license": "MIT"
+}
