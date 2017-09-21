@@ -13,9 +13,9 @@ jest.mock("request", () => (url, fn) => {
 });
 describe("looool", () => {
   it("content fail", () => {
-    func("url")
+    return func("url")
       .then(() => {
-        expect(true).tiBe(false);
+        expect(true).toBe(false);
       })
       .catch(res => {
         expect(res.error).toBe("page not found");
