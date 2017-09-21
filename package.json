@@ -1,8 +1,46 @@
 {
-  "name": "link-preview",
-  "version": "1.0.0",
+  "name": "@nunkisoftware/link-preview",
+  "version": "0.0.0-development",
   "main": "index.js",
   "repository": "https://github.com/nunkisoftware/link-preview.git",
   "author": "MarquesDev <marques.developpement@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.0.0",
+    "ghooks": "^2.0.0",
+    "surge": "^0.19.0",
+    "semantic-release": "^8.0.0"
+  },
+  "scripts": {
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "commit": "git-cz",
+    "test:ci": "CI=true jest --coverage",
+    "test": "jest --watch"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    },
+    "ghooks": {
+      "pre-commit": "npm run test:ci"
+    }
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    },
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.test.js?(x)"
+    ],
+    "testEnvironment": "node"
+  }
 }
