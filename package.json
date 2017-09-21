@@ -13,10 +13,11 @@
     "semantic-release": "^8.0.0"
   },
   "scripts": {
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "semantic-release":
+      "semantic-release pre && npm publish && semantic-release post",
     "commit": "git-cz",
     "test:ci": "CI=true jest --coverage",
-    "test": "jest --watch"
+    "test": "jest --coverage"
   },
   "config": {
     "commitizen": {
@@ -27,9 +28,7 @@
     }
   },
   "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx}"
-    ],
+    "collectCoverageFrom": ["src/**/*.{js,jsx}"],
     "coverageThreshold": {
       "global": {
         "branches": 90,
@@ -38,9 +37,12 @@
         "statements": 90
       }
     },
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.test.js?(x)"
-    ],
+    "testMatch": ["<rootDir>/src/**/__tests__/**/*.test.js?(x)"],
     "testEnvironment": "node"
+  },
+  "dependencies": {
+    "cheerio": "1.0.0-rc.2",
+    "jest": "21.1.0",
+    "request": "2.82.0"
   }
 }
