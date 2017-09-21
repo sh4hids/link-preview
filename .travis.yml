@@ -9,7 +9,7 @@ node_js:
   - '6'
   - '4'
 before_script:
-  - npm test:cli
+  - npm run test:cli
 after_success:
   - npm run semantic-release
 branches:
