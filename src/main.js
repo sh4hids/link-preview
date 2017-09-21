@@ -43,7 +43,7 @@ const linkPreview = url => {
   return new Promise((resolve, reject) => {
     request(url, function(error, response, body) {
       if (response.statusCode === 200) {
-        resolve({ meta: collectMeta(cheerio.load(body), url) });
+        resolve(collectMeta(cheerio.load(body), url));
       } else reject({ error, statusCode: response.statusCode });
     });
   });

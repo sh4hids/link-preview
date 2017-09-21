@@ -2,7 +2,11 @@
   "name": "@nunkisoftware/link-preview",
   "version": "0.0.0-development",
   "main": "index.js",
-  "repository": "https://github.com/nunkisoftware/link-preview.git",
+  "description": "og link preview",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nunkisoftware/link-preview.git"
+  },
   "author": "MarquesDev <marques.developpement@gmail.com>",
   "license": "MIT",
   "keywords": ["link", "preview", "nunki", "node.js"],
