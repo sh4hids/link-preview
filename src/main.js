@@ -1,42 +1,21 @@
 const cheerio = require("cheerio");
 const request = require("request");
 
-function collectMeta($, url) {
-  var relativeLinks = $("meta");
-  var image = null;
-  var imageWidth = null;
-  var imageHeight = null;
-  var imageType = null;
-  var title = null;
-  var description = null;
-  var siteName = null;
+const getByProp = ($, property) =>
+  $(`meta[property='${property}']`)
+    .first()
+    .attr("content");
 
-  relativeLinks.each(function() {
-    var property = $(this).attr("property");
-    if (property === "og:image" && image === null)
-      image = $(this).attr("content");
-    else if (property === "og:image:width" && imageWidth === null)
-      imageWidth = $(this).attr("content");
-    else if (property === "og:image:height" && imageHeight === null)
-      imageHeight = $(this).attr("content");
-    else if (property === "og:image:type" && imageType === null)
-      imageType = $(this).attr("content");
-    else if (property === "og:title" && title === null)
-      title = $(this).attr("content");
-    else if (property === "og:description" && description === null)
-      description = $(this).attr("content");
-    else if (property === "og:site_name" && siteName === null)
-      siteName = $(this).attr("content");
-  });
+function collectMeta($, url) {
   return {
     url,
-    title,
-    description,
-    image,
-    imageHeight,
-    imageWidth,
-    imageType,
-    siteName
+    image: getByProp($, "og:image"),
+    imageWidth: getByProp($, "og:image:width"),
+    imageHeight: getByProp($, "og:image:height"),
+    imageType: getByProp($, "og:image:type"),
+    title: getByProp($, "og:title"),
+    description: getByProp($, "og:description"),
+    siteName: getByProp($, "og:site_name")
   };
 }
 const linkPreview = url => {
