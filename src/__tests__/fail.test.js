@@ -12,10 +12,10 @@ jest.mock("request", () => (url, fn) => {
   return fn(error, response, body);
 });
 
-describe("looool", () => {
-  it("content fail", () => {
-    return func("url").then(res => {
-      expect(res.url).toBe("url");
+describe("fail", () => {
+  it("content not found", () => {
+    return func("http://url.com").then(res => {
+      expect(res.url).toBe("http://url.com");
       expect(!res.title).toBe(true);
       expect(!res.siteName).toBe(true);
       expect(!res.image).toBe(true);
@@ -25,7 +25,19 @@ describe("looool", () => {
       expect(!res.description).toBe(true);
     });
   });
-  it("url fail", () => {
+  it("bad url", () => {
+    return func("http://url").then(res => {
+      expect(res.url).toBe("http://url");
+      expect(!res.title).toBe(true);
+      expect(!res.siteName).toBe(true);
+      expect(!res.image).toBe(true);
+      expect(!res.imageWidth).toBe(true);
+      expect(!res.imageHeight).toBe(true);
+      expect(!res.imageType).toBe(true);
+      expect(!res.description).toBe(true);
+    });
+  });
+  it("not url", () => {
     return func()
       .then(() => {
         expect(true).toBe(false);

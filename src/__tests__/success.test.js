@@ -11,10 +11,10 @@ jest.mock("request", () => (url, fn) => {
   };
   return fn(error, response, body);
 });
-describe("looool", () => {
+describe("success", () => {
   it("content success", () => {
-    return func("url").then(res => {
-      expect(res.url).toBe("url");
+    return func("http://url.com").then(res => {
+      expect(res.url).toBe("http://url.com");
       expect(res.title !== null).toBe(true);
       expect(res.siteName !== null).toBe(true);
       expect(res.image !== null).toBe(true);

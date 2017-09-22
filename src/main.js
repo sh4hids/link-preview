@@ -4,7 +4,7 @@ const request = require("request");
 const getByProp = ($, property) =>
   $(`meta[property='${property}']`)
     .first()
-    .attr("content");
+    .attr("content") || null;
 
 function collectMeta($, url) {
   return {
@@ -18,15 +18,31 @@ function collectMeta($, url) {
     siteName: getByProp($, "og:site_name")
   };
 }
+
+const getError = url => ({
+  url,
+  image: null,
+  imageWidth: null,
+  imageHeight: null,
+  imageType: null,
+  title: undefined,
+  description: null,
+  siteName: null
+});
+
 const linkPreview = url => {
   if (!url || url === "")
     return Promise.reject({ message: "You must add a valid url" });
+  if (!url.match(/^http(s)?:\/\/[a-z]+\.[a-z]+(.)+/i))
+    return Promise.resolve(getError(url));
   return new Promise((resolve, reject) => {
     request(url, function(error, response, body) {
+      if (!response) return resolve(getError(url));
       if (response.statusCode === 200)
         return resolve(collectMeta(cheerio.load(body), url));
-      return reject({ error, statusCode: response.statusCode });
+      return resolve(getError(url));
     });
   });
 };
+
 module.exports = linkPreview;

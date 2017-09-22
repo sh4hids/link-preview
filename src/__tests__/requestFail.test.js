@@ -7,19 +7,19 @@ jest.mock("request", () => (url, fn) => {
   const body = fs.readFileSync(__dirname + "/__data__/fail.html").toString();
   const response = {
     body,
-    statusCode: 404
+    statusCode: 400
   };
   return fn(error, response, body);
 });
-describe("looool", () => {
+describe("request fail", () => {
   it("content fail", () => {
-    return func("url")
-      .then(() => {
-        expect(true).toBe(false);
+    return func("http://url.com")
+      .then(res => {
+        expect(res.url).toBe("http://url.com");
       })
-      .catch(res => {
-        expect(res.error).toBe("page not found");
-        expect(res.statusCode).toBe(404);
+      .catch(e => {
+        console.log(e);
+        expect(true).toBe(false);
       });
   });
 });
