@@ -5,13 +5,9 @@
   "private": false,
   "repository": "https://github.com/nunkisoftware/link-preview.git",
   "license": "MIT",
-  "keywords": [
-    "link",
-    "preview",
-    "nunki",
-    "node.js"
-  ],
+  "keywords": ["link", "preview", "nunki", "node.js"],
   "devDependencies": {
+    "codecov": "2.3.0",
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.0.0",
     "ghooks": "^2.0.0",
@@ -20,10 +16,12 @@
     "surge": "^0.19.0"
   },
   "scripts": {
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "semantic-release":
+      "semantic-release pre && npm publish && semantic-release post",
     "commit": "git-cz",
     "test:ci": "CI=true jest --coverage",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "report-coverage": "cat ./coverage/lcov.info | codecov"
   },
   "config": {
     "commitizen": {
@@ -34,9 +32,7 @@
     }
   },
   "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx}"
-    ],
+    "collectCoverageFrom": ["src/**/*.{js,jsx}"],
     "coverageThreshold": {
       "global": {
         "branches": 90,
@@ -45,9 +41,7 @@
         "statements": 90
       }
     },
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.test.js?(x)"
-    ],
+    "testMatch": ["<rootDir>/src/**/__tests__/**/*.test.js?(x)"],
     "testEnvironment": "node"
   },
   "dependencies": {
