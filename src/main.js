@@ -31,8 +31,10 @@ const getError = url => ({
 });
 
 const linkPreview = url => {
-  if (!url || url === "") return Promise.reject({ message: "You must add a valid url" });
-  if (!url.match(/^http(s)?:\/\/[a-z]+\.[a-z]+(.)+/i)) return Promise.resolve(getError(url));
+  if (!url || url === "")
+    return Promise.reject({ message: "You must add a valid url" });
+  if (!url.match(/^http(s)?:\/\/[a-z]+\.[a-z]+(.)+/i))
+    return Promise.resolve(getError(url));
   return new Promise((resolve, reject) => {
     request(url, function(error, response, body) {
       if (!response) return resolve(getError(url));
