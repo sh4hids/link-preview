@@ -30,13 +30,17 @@ const getError = url => ({
   siteName: null
 });
 
-const linkPreview = url => {
+const linkPreview = (url, timeout) => {
   if (!url || url === "")
     return Promise.reject({ message: "You must add a valid url" });
   if (!url.match(/^http(s)?:\/\/[a-z]+\.[a-z]+(.)+/i))
     return Promise.resolve(getError(url));
   return new Promise((resolve, reject) => {
-    request(url, function(error, response, body) {
+    request(url, { timeout: timeout || 100000 }, function(
+      error,
+      response,
+      body
+    ) {
       if (!response) return resolve(getError(url));
       if (response.statusCode === 200)
         return resolve(collectMeta(cheerio.load(body), url));

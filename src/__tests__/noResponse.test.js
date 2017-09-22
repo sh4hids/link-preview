@@ -1,5 +1,5 @@
 const func = require("./../main");
-jest.mock("request", () => (url, fn) => fn({}, undefined, undefined));
+jest.mock("request", () => (url, timeout, fn) => fn({}, undefined, undefined));
 
 describe("no response", () => {
   it("no response", () => {
