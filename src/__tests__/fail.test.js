@@ -11,17 +11,27 @@ jest.mock("request", () => (url, fn) => {
   };
   return fn(error, response, body);
 });
+
 describe("looool", () => {
   it("content fail", () => {
-    func("url").then(res => {
-      expect(res.meta.url).toBe("url");
-      expect(res.meta.title === null).toBe(true);
-      expect(res.meta.siteName === null).toBe(true);
-      expect(res.meta.image === null).toBe(true);
-      expect(res.meta.imageWidth === null).toBe(true);
-      expect(res.meta.imageHeight === null).toBe(true);
-      expect(res.meta.imageType === null).toBe(true);
-      expect(res.meta.description === null).toBe(true);
+    return func("url").then(res => {
+      expect(res.url).toBe("url");
+      expect(!res.title).toBe(true);
+      expect(!res.siteName).toBe(true);
+      expect(!res.image).toBe(true);
+      expect(!res.imageWidth).toBe(true);
+      expect(!res.imageHeight).toBe(true);
+      expect(!res.imageType).toBe(true);
+      expect(!res.description).toBe(true);
     });
+  });
+  it("url fail", () => {
+    return func()
+      .then(() => {
+        expect(true).toBe(false);
+      })
+      .catch(err => {
+        expect(err.message).toBe("You must add a valid url");
+      });
   });
 });

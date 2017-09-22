@@ -19,11 +19,13 @@ function collectMeta($, url) {
   };
 }
 const linkPreview = url => {
+  if (!url || url === "")
+    return Promise.reject({ message: "You must add a valid url" });
   return new Promise((resolve, reject) => {
     request(url, function(error, response, body) {
-      if (response.statusCode === 200) {
-        resolve(collectMeta(cheerio.load(body), url));
-      } else reject({ error, statusCode: response.statusCode });
+      if (response.statusCode === 200)
+        return resolve(collectMeta(cheerio.load(body), url));
+      return reject({ error, statusCode: response.statusCode });
     });
   });
 };

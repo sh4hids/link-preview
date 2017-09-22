@@ -13,15 +13,15 @@ jest.mock("request", () => (url, fn) => {
 });
 describe("looool", () => {
   it("content success", () => {
-    func("url").then(res => {
-      expect(res.meta.url).toBe("url");
-      expect(res.meta.title !== null).toBe(true);
-      expect(res.meta.siteName !== null).toBe(true);
-      expect(res.meta.image !== null).toBe(true);
-      expect(res.meta.imageWidth !== null).toBe(true);
-      expect(res.meta.imageHeight !== null).toBe(true);
-      expect(res.meta.imageType !== null).toBe(true);
-      expect(res.meta.description !== null).toBe(true);
+    return func("url").then(res => {
+      expect(res.url).toBe("url");
+      expect(res.title !== null).toBe(true);
+      expect(res.siteName !== null).toBe(true);
+      expect(res.image !== null).toBe(true);
+      expect(res.imageWidth !== null).toBe(true);
+      expect(res.imageHeight !== null).toBe(true);
+      expect(res.imageType !== null).toBe(true);
+      expect(res.description !== null).toBe(true);
     });
   });
 });
