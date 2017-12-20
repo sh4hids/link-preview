@@ -17,9 +17,10 @@ function collectMeta($, url) {
     title: getByProp($, "og:title"),
     description: getByProp($, "og:description"),
     siteName: getByProp($, "og:site_name"),
+    ogUrl,
     youtube: !ogUrl
       ? null
-      : ogUrl.indexOf("https://youtube.com") === 0 ? `https://youtube.com/embed/${getValue(url, "v")}` : null
+      : ogUrl.indexOf("youtube.com") >= 0 ? `https://youtube.com/embed/${getValue(ogUrl, "v")}` : null
   };
 }
 
@@ -53,5 +54,4 @@ const linkPreview = (url, timeout = 100000) => {
   });
 };
 
-linkPreview("http://youtu.be/LNoT558mS8U?a");
 module.exports = linkPreview;
