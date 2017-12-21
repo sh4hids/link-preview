@@ -9,6 +9,7 @@ const getByProp = ($, property) =>
 function collectMeta($, url, deepVideo) {
   const ogUrl = getByProp($, "og:url");
   const ogVideoUrl = getByProp($, "og:video:secure_url") || getByProp($, "og:video:url");
+
   const res = {
     url,
     image: getByProp($, "og:image"),
