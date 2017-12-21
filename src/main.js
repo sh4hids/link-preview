@@ -37,18 +37,18 @@ function collectMeta($, url, deepVideo) {
   return Promise.resolve(res);
 }
 
+const embedYoutube = url =>
+  url.indexOf("youtube.com") >= 0 ? `https://youtube.com/embed/${getValue(url, "v")}` : null;
 const getDeepVideo = urls => {
   if (!urls) return Promise.resolve([null]);
   return Promise.all(
     urls.map(url =>
-      linkPreview
-        .makeRequest(url, 10000)
-        .then(
-          ({ response, body }) =>
-            !response || response.statusCode !== 200
-              ? null
-              : getByProp(cheerio.load(body), "og:video:secure_url") || getByProp(cheerio.load(body), "og:video:url")
-        )
+      linkPreview.makeRequest(url, 10000).then(({ response, body }) => {
+        const $ = cheerio.load(body);
+        return !response || response.statusCode !== 200
+          ? null
+          : getByProp($, "og:video:secure_url") || getByProp($, "og:video:url") || embedYoutube(getByProp($, "og:url"));
+      })
     )
   );
 };
@@ -86,4 +86,5 @@ linkPreview.makeRequest = (url, timeout) =>
     request(url, { timeout: timeout }, (error, response, body) => resolve({ body, response }));
   });
 
+linkPreview("https://t.co/cg8VbrEQ2s", true).then(res => console.log(res));
 module.exports = linkPreview;
