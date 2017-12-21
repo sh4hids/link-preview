@@ -7,7 +7,6 @@ with number-separator you can set a separator each thousands of your integer or 
 [![Github file size](https://img.shields.io/github/size/nunkisoftware/link-preview/src/main.js.svg)]()
 [![Codecov](https://img.shields.io/codecov/c/github/nunkisoftware/link-preview.svg)]()
 
-
 ## Installation
 you install it with npm : 
 ```
