@@ -8,7 +8,7 @@ const getByProp = ($, property) =>
 
 function collectMeta($, url, deepVideo) {
   const ogUrl = getByProp($, "og:url");
-
+  const ogVideoUrl = getByProp($, "og:video:secure_url") || getByProp($, "og:video:url");
   const res = {
     url,
     image: getByProp($, "og:image"),
@@ -18,20 +18,22 @@ function collectMeta($, url, deepVideo) {
     title: getByProp($, "og:title"),
     description: getByProp($, "og:description"),
     siteName: getByProp($, "og:site_name"),
-    ogVideoUrl: getByProp($, "og:video:url"),
+    ogVideoUrl: (ogVideoUrl || "").indexOf("youtube.com") >= 0 ? null : ogVideoUrl,
     ogUrl,
-    youtube: !ogUrl
-      ? null
-      : ogUrl.indexOf("youtube.com") >= 0 ? `https://youtube.com/embed/${getValue(ogUrl, "v")}` : null
+    youtube:
+      (ogVideoUrl || "").indexOf("youtube.com") >= 0
+        ? ogVideoUrl
+        : !ogUrl ? null : ogUrl.indexOf("youtube.com") >= 0 ? `https://youtube.com/embed/${getValue(ogUrl, "v")}` : null
   };
   if (deepVideo && !res.ogVideoUrl && !res.youtube)
     return getDeepVideo(
       (getByProp($, "og:description") || "").match(/(http(s)?:\/\/([a-z0-9]+\.)+[a-z0-9]+(\/[a-z0-9]+)?)/gi)
-    ).then(ogVideoUrl =>
-      Object.assign(res, {
-        [ogVideoUrl.indexOf("youtube.com") >= 0 ? "youtube" : "ogVideoUrl"]: ogVideoUrl.filter(url => !!url)[0] || null
-      })
-    );
+    ).then(ogVideoUrl => {
+      videoUrl = ogVideoUrl.filter(url => !!url)[0] || "";
+      return Object.assign(res, {
+        [videoUrl.indexOf("youtube.com") >= 0 ? "youtube" : "ogVideoUrl"]: videoUrl || null
+      });
+    });
   return Promise.resolve(res);
 }
 
@@ -43,7 +45,9 @@ const getDeepVideo = urls => {
         .makeRequest(url, 10000)
         .then(
           ({ response, body }) =>
-            !response || response.statusCode !== 200 ? null : getByProp(cheerio.load(body), "og:video:secure_url")
+            !response || response.statusCode !== 200
+              ? null
+              : getByProp(cheerio.load(body), "og:video:secure_url") || getByProp(cheerio.load(body), "og:video:url")
         )
     )
   );

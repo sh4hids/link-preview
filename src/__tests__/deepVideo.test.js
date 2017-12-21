@@ -55,7 +55,7 @@ describe("deepVideo", () => {
       .resolves(makeRequestTwo())
       .resolves(makeRequestTwo());
     return func("http://test.com?v=123", true).then(res => {
-      expect(res.ogVideoUrl).toBe("https://youtube.com/embed/12345");
+      expect(res.ogVideoUrl).toBe("https://youtrube.com/embed/12345");
       stub.restore();
     });
   });
