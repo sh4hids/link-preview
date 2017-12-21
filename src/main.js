@@ -27,7 +27,11 @@ function collectMeta($, url, deepVideo) {
   if (deepVideo && !res.ogVideoUrl && !res.youtube)
     return getDeepVideo(
       getByProp($, "og:description").match(/(http(s)?:\/\/([a-z0-9]+\.)+[a-z0-9]+(\/[a-z0-9]+)?)/gi)
-    ).then(ogVideoUrl => Object.assign(res, { ogVideoUrl: ogVideoUrl.filter(url => !!url)[0] || null }));
+    ).then(ogVideoUrl =>
+      Object.assign(res, {
+        [ogVideoUrl.indexOf("youtube.com") >= 0 ? "youtube" : "ogVideoUrl"]: ogVideoUrl.filter(url => !!url)[0] || null
+      })
+    );
   return Promise.resolve(res);
 }
 
