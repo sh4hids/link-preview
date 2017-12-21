@@ -86,5 +86,4 @@ linkPreview.makeRequest = (url, timeout) =>
     request(url, { timeout: timeout }, (error, response, body) => resolve({ body, response }));
   });
 
-linkPreview("https://t.co/cg8VbrEQ2s", true).then(res => console.log(res));
 module.exports = linkPreview;
