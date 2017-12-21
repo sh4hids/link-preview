@@ -20,10 +20,7 @@ function collectMeta($, url, deepVideo) {
     siteName: getByProp($, "og:site_name"),
     ogVideoUrl: (ogVideoUrl || "").indexOf("youtube.com") >= 0 ? null : ogVideoUrl,
     ogUrl,
-    youtube:
-      (ogVideoUrl || "").indexOf("youtube.com") >= 0
-        ? ogVideoUrl
-        : !ogUrl ? null : ogUrl.indexOf("youtube.com") >= 0 ? `https://youtube.com/embed/${getValue(ogUrl, "v")}` : null
+    youtube: (ogVideoUrl || "").indexOf("youtube.com") >= 0 ? ogVideoUrl : !ogUrl ? null : embedYoutube(ogUrl)
   };
   if (deepVideo && !res.ogVideoUrl && !res.youtube)
     return getDeepVideo(
@@ -39,6 +36,7 @@ function collectMeta($, url, deepVideo) {
 
 const embedYoutube = url =>
   url.indexOf("youtube.com") >= 0 ? `https://youtube.com/embed/${getValue(url, "v")}` : null;
+
 const getDeepVideo = urls => {
   if (!urls) return Promise.resolve([null]);
   return Promise.all(
